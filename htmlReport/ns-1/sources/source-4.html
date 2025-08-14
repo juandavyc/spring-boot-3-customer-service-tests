@@ -1,0 +1,192 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CustomerService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.ntloc.demo.customer</a>
+</div>
+
+<h1>Coverage Summary for Class: CustomerService (com.ntloc.demo.customer)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CustomerService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    88,9%
+  </span>
+  <span class="absValue">
+    (16/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (29/29)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.ntloc.demo.customer;
+&nbsp;
+&nbsp;import com.ntloc.demo.exception.CustomerEmailUnavailableException;
+&nbsp;import com.ntloc.demo.exception.CustomerNotFoundException;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Objects;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;@Service
+&nbsp;public class CustomerService {
+&nbsp;
+&nbsp;    private final CustomerRepository customerRepository;
+&nbsp;
+<b class="fc">&nbsp;    public CustomerService(CustomerRepository customerRepository) {</b>
+<b class="fc">&nbsp;        this.customerRepository = customerRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Customer&gt; getCustomers() {
+<b class="fc">&nbsp;        return customerRepository.findAll();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;Customer&gt; getCustomersByAddress(String address) {
+<b class="fc">&nbsp;        return customerRepository.findAllByAddress(address);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Customer getCustomerById(Long id) {
+<b class="fc">&nbsp;        return customerRepository.findById(id).orElseThrow(() -&gt;</b>
+<b class="fc">&nbsp;                new CustomerNotFoundException(&quot;Customer with id &quot; + id + &quot; doesn&#39;t found&quot;));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void createCustomer(CreateCustomerRequest createCustomerRequest) {
+<b class="fc">&nbsp;        Optional&lt;Customer&gt; customerByEmail = customerRepository.findByEmail(createCustomerRequest.email());</b>
+<b class="fc">&nbsp;        if (customerByEmail.isPresent()) {</b>
+<b class="fc">&nbsp;            throw new CustomerEmailUnavailableException(&quot;The email &quot; + createCustomerRequest.email() + &quot; unavailable.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        Customer customer = Customer.create(createCustomerRequest.name(),</b>
+<b class="fc">&nbsp;                createCustomerRequest.email(),</b>
+<b class="fc">&nbsp;                createCustomerRequest.address());</b>
+<b class="fc">&nbsp;        customerRepository.save(customer);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public void updateCustomer(Long id, String name, String email, String address) {
+<b class="fc">&nbsp;        Customer customer = customerRepository.findById(id).orElseThrow(() -&gt;</b>
+<b class="fc">&nbsp;                new CustomerNotFoundException(&quot;Customer with id &quot; + id + &quot; doesn&#39;t found&quot;));</b>
+<b class="fc">&nbsp;        if (Objects.nonNull(name) &amp;&amp; !Objects.equals(customer.getName(), name)) {</b>
+&nbsp;
+<b class="fc">&nbsp;            customer.setName(name);</b>
+&nbsp;        }
+<b class="pc">&nbsp;        if (Objects.nonNull(email) &amp;&amp; !Objects.equals(customer.getEmail(), email)) {</b>
+<b class="fc">&nbsp;            Optional&lt;Customer&gt; customerByEmail = customerRepository.findByEmail(email);</b>
+<b class="fc">&nbsp;            if (customerByEmail.isPresent()) {</b>
+<b class="fc">&nbsp;                throw new CustomerEmailUnavailableException(&quot;The email \&quot;&quot; + email + &quot;\&quot; unavailable to update&quot;);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            customer.setEmail(email);</b>
+&nbsp;        }
+<b class="pc">&nbsp;        if (Objects.nonNull(address) &amp;&amp; !Objects.equals(customer.getAddress(), address)) {</b>
+&nbsp;
+<b class="fc">&nbsp;            customer.setAddress(address);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        customerRepository.save(customer);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void deleteCustomer(Long id) {
+<b class="fc">&nbsp;        boolean isExist = customerRepository.existsById(id);</b>
+<b class="fc">&nbsp;        if (!isExist) {</b>
+<b class="fc">&nbsp;            throw new CustomerNotFoundException(&quot;Customer with id &quot; + id + &quot; doesn&#39;t exist.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        customerRepository.deleteById(id);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-08-13 20:54</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,243 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Customer</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.ntloc.demo.customer</a>
+</div>
+
+<h1>Coverage Summary for Class: Customer (com.ntloc.demo.customer)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Customer</td>
+<td class="coverageStat">
+  <span class="percent">
+    81,2%
+  </span>
+  <span class="absValue">
+    (13/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (5/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    88%
+  </span>
+  <span class="absValue">
+    (22/25)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Customer$HibernateInstantiator$V5fa7bg4</td>
+  </tr>
+  <tr>
+    <td class="name">Customer$HibernateInstantiator$veqQMLeT</td>
+  </tr>
+  <tr>
+    <td class="name">Customer$HibernateProxy$3lDJikFO</td>
+  </tr>
+  <tr>
+    <td class="name">Customer$HibernateProxy$LAWnH30E</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    81,2%
+  </span>
+  <span class="absValue">
+    (13/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (5/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    88%
+  </span>
+  <span class="absValue">
+    (22/25)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.ntloc.demo.customer;
+&nbsp;
+&nbsp;
+&nbsp;import jakarta.persistence.*;
+&nbsp;
+&nbsp;import java.util.Objects;
+&nbsp;
+&nbsp;@Table
+&nbsp;@Entity
+&nbsp;public class Customer {
+&nbsp;
+&nbsp;    @Id
+&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+&nbsp;    private Long id;
+&nbsp;    private String name;
+&nbsp;    private String email;
+&nbsp;    private String address;
+&nbsp;
+<b class="fc">&nbsp;    public Customer() {</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public Customer(Long id, String name, String email, String address) {</b>
+<b class="fc">&nbsp;        this.id = id;</b>
+<b class="fc">&nbsp;        this.name = name;</b>
+<b class="fc">&nbsp;        this.email = email;</b>
+<b class="fc">&nbsp;        this.address = address;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public Customer(String name, String email, String address) {</b>
+<b class="fc">&nbsp;        this.name = name;</b>
+<b class="fc">&nbsp;        this.email = email;</b>
+<b class="fc">&nbsp;        this.address = address;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Customer create(String name, String email, String address) {
+<b class="fc">&nbsp;        return new Customer(name, email, address);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Customer create(Long id, String name, String email, String address) {
+<b class="nc">&nbsp;        return new Customer(id, name, email, address);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Long getId() {
+<b class="fc">&nbsp;        return id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setId(Long id) {
+<b class="fc">&nbsp;        this.id = id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getName() {
+<b class="fc">&nbsp;        return name;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setName(String name) {
+<b class="fc">&nbsp;        this.name = name;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getEmail() {
+<b class="fc">&nbsp;        return email;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setEmail(String email) {
+<b class="fc">&nbsp;        this.email = email;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getAddress() {
+<b class="fc">&nbsp;        return address;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setAddress(String address) {
+<b class="fc">&nbsp;        this.address = address;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean equals(Object o) {
+<b class="pc">&nbsp;        if (o == null || getClass() != o.getClass()) return false;</b>
+<b class="fc">&nbsp;        Customer customer = (Customer) o;</b>
+<b class="pc">&nbsp;        return Objects.equals(id, customer.id) &amp;&amp; Objects.equals(name, customer.name) &amp;&amp; Objects.equals(email, customer.email) &amp;&amp; Objects.equals(address, customer.address);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int hashCode() {
+<b class="nc">&nbsp;        return Objects.hash(id, name, email, address);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public String toString() {
+<b class="nc">&nbsp;        return &quot;Customer{&quot; +</b>
+&nbsp;                &quot;id=&quot; + id +
+&nbsp;                &quot;, name=&#39;&quot; + name + &#39;\&#39;&#39; +
+&nbsp;                &quot;, email=&#39;&quot; + email + &#39;\&#39;&#39; +
+&nbsp;                &quot;, address=&#39;&quot; + address + &#39;\&#39;&#39; +
+&nbsp;                &#39;}&#39;;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-08-13 20:54</div>
+</div>
+</body>
+</html>
